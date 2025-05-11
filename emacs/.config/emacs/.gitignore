@@ -1,0 +1,5 @@
+# Ignore elpaca package manager installs for working init
+elpaca/
+
+# Ignore elpaca package manager cache
+eln-cache/ 
