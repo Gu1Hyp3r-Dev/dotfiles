@@ -6,6 +6,7 @@
 
 * TABLE OF CONTENTS :toc:
 - [[#about-this-config][ABOUT THIS CONFIG]]
+  - [[#needed-packages][Needed packages]]
 - [[#monitors][MONITORS]]
   - [[#initialize-monitors][Initialize monitors]]
   - [[#initialize-workspaces][Initialize workspaces]]
@@ -28,6 +29,23 @@
 - [[#windows-and-workspaces][WINDOWS AND WORKSPACES]]
 
 * ABOUT THIS CONFIG
+** Needed packages
+*** Hypsrsome: https://github.com/sopa0/hyprsome
+This package is responsible for controlling the workspaces in all monitors.
+
+**** Installation guide
+The default installation from github doesnt work (at least for now), but here is a working one:
+#+begin_src bash
+  git clone https://github.com/sopa0/hyprsome
+  cd hyprsome
+  cargo build --release
+  sudo cp target/release/hyprsome /usr/local/bin
+
+  # Just to free some space
+  cd ..
+  rm -rf hyprsome/
+
+#+end_src
 
 
 * MONITORS
