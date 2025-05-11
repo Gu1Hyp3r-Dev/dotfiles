@@ -1,0 +1,6 @@
+/sudo:root@localhost:/etc/default/grub
+/tmp/#!sudo:root@localhost:!etc!default!grub#
+/sudo:root@localhost:/etc/optimus-manager/optimus-manager.conf
+/tmp/#!sudo:root@localhost:!etc!optimus-manager!optimus-manager.conf#
+/home/gu1hyp3r/.config/hypr/hyprland/hyprland.conf
+/home/gu1hyp3r/.config/hypr/hyprland/#hyprland.conf#

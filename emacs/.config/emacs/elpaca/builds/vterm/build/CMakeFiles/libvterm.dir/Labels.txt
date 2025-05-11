@@ -1,0 +1,13 @@
+# Target labels
+ libvterm
+# Source files and their labels
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/CMakeFiles/libvterm
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/CMakeFiles/libvterm.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/CMakeFiles/libvterm-complete.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-build.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-configure.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-download.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-install.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-mkdir.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-patch.rule
+/home/gu1hyp3r/.config/emacs/elpaca/builds/vterm/build/libvterm-prefix/src/libvterm-stamp/libvterm-update.rule

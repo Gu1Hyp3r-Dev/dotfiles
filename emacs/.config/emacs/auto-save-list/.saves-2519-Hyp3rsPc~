@@ -1,0 +1,4 @@
+/sudo:root@localhost:/etc/mkinitcpio.conf
+/tmp/#!sudo:root@localhost:!etc!mkinitcpio.conf#
+/etc/prime/prime.conf
+/etc/prime/#prime.conf#

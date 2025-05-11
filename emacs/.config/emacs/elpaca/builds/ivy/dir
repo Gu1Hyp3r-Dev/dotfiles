@@ -1,0 +1,18 @@
+Este é o ficheiro .../info/dir, que contém o nó
+mais alto da hierarquia do Info, chamado (dir)Topo.
+A primeira vez que chamar o Info, começará por ver este nó.
+
+File: dir,	Node: Top	Este é o cimo da árvore INFO
+
+  Este (o nó Pasta) mostra um menu de tópicos principais.
+  Digitar "q" sai, "H" lista todos os comandos Info, "d" volta aqui,
+  "h" oferece uma estreia aos novatos,
+  "mEmacs<Enter>" visita o manual do Emacs, etc.
+
+  No Emacs, pode clicar com o botão 2 do rato num item de menu ou numa referência
+  cruzada para os seleccionar.
+
+* Menu:
+
+Emacs
+* Ivy: (ivy).                   Using Ivy for completion.

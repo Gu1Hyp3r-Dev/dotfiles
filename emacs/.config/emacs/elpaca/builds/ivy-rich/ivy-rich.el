@@ -1,0 +1,1 @@
+/home/gu1hyp3r/.config/emacs/elpaca/repos/ivy-rich/ivy-rich.el

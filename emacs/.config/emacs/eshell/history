@@ -1,0 +1,257 @@
+es
+emacsclient -cF "((visibility . nil))" -e "(emacs-counsil-launcher)"
+emacs -cF "((visibility . nil))" -e "(emacs-counsil-launcher)"
+cd university/sem4/rc/lab02/ 
+ls
+gcc
+gcc -o ex1.c ex1
+nano ex1.c
+cd ~/.config/emacs/university/sem4/rc/lab02/
+ls
+gcc -o ex1 ex1.c
+./ex1 
+ls
+cd ~/.config/emacs/university/sem4/rc/lab02/
+gcc -o ex1 ex1.c
+nano
+clear
+cd ~/.config/emacs/university/sem4/rc/lab02/
+gcc -o ex1 ex1.c
+./ex1
+javac Main.java
+clear
+javac Main.java
+time java Main
+cat input | time java Main
+javac Main.java
+cat input | time java Main
+javac Main.java
+cat input | time java Main
+javac Main.java
+cat input | time java Main
+javac Main.java
+cat input | time java Main
+javac Main.java
+cat input | time java Main
+javac Main.java
+cat input | time java Main
+cd ..
+cd ex3
+ls
+la
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+clear
+javac Main.java
+cat input1 | time java Main
+clear
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+clear
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+time java Main
+javac Main.java
+clear
+cat input1 | time java Main
+time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+time java Main
+javac Main.java
+cat input1 | time java Main
+clear
+javac Main.java
+cat input1 | time java Main
+cat input2 | time java Main
+cd .config/emacs/university/sem4/eda2/ex3/
+ls
+ld
+clear
+javac Main.java
+cat input1 | time java Main
+cat input2 | time java Main
+javac Main.java
+cat input1 | time java Main
+cat input2 | time java Main
+javac Main.java
+cat input2 | time java Main
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+cat input2 | time java Main
+time java Main
+javac Main.java
+time java Main
+cat input3 | time java Main
+javac Main.java
+cat input3 | time java Main
+javac Main.java
+cat input3 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+cat worst_case_100k | time java Main
+javac Main.java
+cat input1 | time java Main 
+cat worst_case_100k | time java Main
+javac Main.java
+cat input1 | time java Main 
+cat worst_case_100k | time java Main
+javac Main.java
+cat input1 | time java Main 
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat worst_case_100k | time java Main
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+cat worst_case_100k | time java Main
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+clear
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
+javac Main.java
+cat input1 | time java Main 
