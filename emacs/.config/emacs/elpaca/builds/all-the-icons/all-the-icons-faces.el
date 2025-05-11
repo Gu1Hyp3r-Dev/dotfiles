@@ -1,1 +1,0 @@
-/home/gu1hyp3r/.config/emacs/elpaca/repos/all-the-icons/all-the-icons-faces.el
