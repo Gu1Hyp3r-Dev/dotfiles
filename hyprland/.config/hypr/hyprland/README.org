@@ -1,11 +1,12 @@
 #+TITLE: HyprLand Configuration (Org Mode)
 #+DESCRIPTION: Here lies all the configuration for hyprland, made with Org Mode!
 #+AUTHOR: Gu1Hyp3r
-#+PROPERTY: header-args :tangle hyprland.conf
+#+PROPERTY: header-args:conf :tangle hyprland.conf
 
 
 * TABLE OF CONTENTS :toc:
 - [[#about-this-config][ABOUT THIS CONFIG]]
+  - [[#accept-custom-config-directory][Accept custom config directory]]
   - [[#needed-packages][Needed packages]]
 - [[#monitors][MONITORS]]
   - [[#initialize-monitors][Initialize monitors]]
@@ -29,6 +30,13 @@
 - [[#windows-and-workspaces][WINDOWS AND WORKSPACES]]
 
 * ABOUT THIS CONFIG
+** Accept custom config directory
+The hyprland config is set to be on a non default directory, so you need to setup a symlink to create a reference of the config to the default directory that hyperland accepts.
+#+begin_src bash
+  ln -s ~/.config/hypr/hyprland/hyprland.conf ~/.config/hypr/hyprland.conf
+
+#+end_src
+
 ** Needed packages
 *** Hypsrsome: https://github.com/sopa0/hyprsome
 This package is responsible for controlling the workspaces in all monitors.
