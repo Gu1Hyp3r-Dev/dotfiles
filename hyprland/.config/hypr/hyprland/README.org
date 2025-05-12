@@ -19,6 +19,8 @@
   - [[#hardware-acceleration][Hardware acceleration]]
   - [[#tearing-control-optional][Tearing control (optional)]]
 - [[#auto-start][AUTO START]]
+  - [[#daemons][Daemon's]]
+  - [[#packages][Packages]]
   - [[#nvidia-power-management][NVIDIA power management]]
   - [[#workspaces][Workspaces]]
 - [[#look-and-feel][LOOK AND FEEL]]
@@ -54,6 +56,24 @@ The default installation from github doesnt work (at least for now), but here is
   rm -rf hyprsome/
 
 #+end_src
+
+*** SWWW: https://github.com/LGFae/swww
+This package is responsible for controlling wallpapers.
+
+**** Installation guide
+#+begin_src bash
+  git clone https://github.com/LGFae/swww.git
+  cd swww
+  cargo build --release
+  sudo cp ./target/release/swww /usr/local/bin/
+  sudo cp ./target/release/swww-daemon /usr/local/bin
+
+  # Just to free some space
+  cd ..
+  rm -rf swww/
+
+#+end_src
+
 
 
 * MONITORS
@@ -113,12 +133,12 @@ The default installation from github doesnt work (at least for now), but here is
 
 ** Primary GPU (AMD)
 #+begin_src conf
-  #env = WLR_DRM_DEVICES, /dev/dri/card0
-  #env = LIBVA_DRIVER_NAME, radeonsi
-  #env = GBM_BACKEND, nvidia-drm
-  #env = __GLX_VENDOR_LIBRARY_NAME, mesa
-  #env = WLR_DRM_NO_ATOMIC, 1
-  #env = __GL_MinimizeStalling, 0
+  env = WLR_DRM_DEVICES, /dev/dri/card0
+  env = LIBVA_DRIVER_NAME, radeonsi
+  env = GBM_BACKEND, nvidia-drm
+  env = __GLX_VENDOR_LIBRARY_NAME, mesa
+  env = WLR_DRM_NO_ATOMIC, 1
+  env = __GL_MinimizeStalling, 0
 
 #+end_src
 
@@ -136,32 +156,41 @@ The default installation from github doesnt work (at least for now), but here is
 
 ** Hardware acceleration
 #+begin_src conf
-  #env = WLR_RENDERER, vulkan
-  #env = NVD_BACKEND, direct
+  env = WLR_RENDERER, vulkan
+  env = NVD_BACKEND, direct
 
 #+end_src
 
 ** Tearing control (optional)
 #+begin_src conf
-  #env = __GL_SYNC_TO_VBLANK, 1 # 0=off (gaming), 1=on (no tearing)
-  #env = __GL_SYNC_DISPLAY_DEVICE, $monitor1
-  #env = __GL_YIELD, USLEEP
+  env = __GL_SYNC_TO_VBLANK, 1 # 0=off (gaming), 1=on (no tearing)
+  env = __GL_SYNC_DISPLAY_DEVICE, $monitor1
+  env = __GL_YIELD, USLEEP
 
 #+end_src
 
 
 * AUTO START
 #+begin_src conf
-  exec-once = waybar
-  exec-once = dunst
-  exec-once = hyprpaper
-  exec-once = hyprlock
-  exec-once = swayng -i ~/wallpaper.jpg
   exec-once = dbus-update-activation-environment --system WAYLAND_DISPLAY DISPLAY
   exec-once = wl-paste --watch cliphist store # Clipboard 
-  exec-once = emacs -daemon
   exec-once = wlr-randr --output DP-6 --adaptive-sync enabled
   exec-once = optimus-manager --set-startup hybrid
+
+#+end_src
+
+** Daemon's
+#+begin_src conf
+  exec-once = swww-daemon
+  exec-once = emacs -daemon
+
+#+end_src
+
+** Packages
+#+begin_src conf
+  exec-once = waybar
+  exec-once = hyprlock
+  exec-once = dunst
 
 #+end_src
 
