@@ -27,6 +27,7 @@
 - [[#input][INPUT]]
 - [[#keybindings][KEYBINDINGS]]
   - [[#main][Main]]
+  - [[#swww-change-random-wallpaper][SWWW change random wallpaper]]
   - [[#workspaces-1][Workspaces]]
   - [[#other][Other]]
 - [[#windows-and-workspaces][WINDOWS AND WORKSPACES]]
@@ -181,7 +182,7 @@ This package is responsible for controlling wallpapers.
 
 ** Daemon's
 #+begin_src conf
-  exec-once = swww-daemon
+  exec-once = swww-daemon --format xrgb
   exec-once = emacs -daemon
 
 #+end_src
@@ -374,6 +375,12 @@ This package is responsible for controlling wallpapers.
   bind = $mainMod, J, togglesplit, # dwindle
   bind = $mainMod SHIFT, R, exec, hyprctl reload
 
+
+#+end_src
+
+** SWWW change random wallpaper
+#+begin_src conf
+  bind = $mainMod, W, exec, ~/.config/swww/swww.sh; sleep 1.5
 
 #+end_src
 
