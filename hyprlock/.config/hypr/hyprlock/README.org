@@ -41,7 +41,7 @@
 #+begin_src conf :tangle hyprlock.conf
   background {
       monitor =
-      path = $HOME/.config/wallpapers/wp-ferrari-f40
+      path = $HOME/.config/wallpapers/active-wallpaper
       blur_passes = 2
       color = 
       }
