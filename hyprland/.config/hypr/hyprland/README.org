@@ -190,7 +190,6 @@ This package is responsible for controlling wallpapers.
 ** Packages
 #+begin_src conf
   exec-once = waybar
-  exec-once = hyprlock
   exec-once = dunst
 
 #+end_src
@@ -374,6 +373,7 @@ This package is responsible for controlling wallpapers.
   bind = $mainMod, P, pseudo, # dwindle
   bind = $mainMod, J, togglesplit, # dwindle
   bind = $mainMod SHIFT, R, exec, hyprctl reload
+  bind = $mainMod, L, exec, hyprlock
 
 
 #+end_src

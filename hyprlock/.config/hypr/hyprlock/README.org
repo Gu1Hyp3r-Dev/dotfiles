@@ -1,0 +1,130 @@
+#+TITLE: Hyprlock config
+#+AUTHOR: Gu1Hyp3r
+#+PROPERTY: header-args:conf+ :tangle hyprlock.conf
+
+
+* TABLE OF CONTENTS :toc:
+- [[#about-this-config][ABOUT THIS CONFIG]]
+- [[#theme][THEME]]
+- [[#general][GENERAL]]
+- [[#background][BACKGROUND]]
+- [[#time-label][TIME LABEL]]
+- [[#date-label][DATE LABEL]]
+- [[#user-avatar][USER AVATAR]]
+- [[#input-field][INPUT FIELD]]
+
+* ABOUT THIS CONFIG
+
+
+* THEME
+#+begin_src conf :tangle hyprlock.conf
+  source = $HOME/.config/hypr/hyprlock/mocha.conf
+
+  $accent = $mauve
+  $accentAlpha = $mauveAlpha
+  $font = CaskaydiaCove Nerd Font Mono
+
+#+end_src
+
+
+* GENERAL
+#+begin_src conf :tangle hyprlock.conf
+  general {
+      disable_loading_bar = true
+      hide_cursor = true
+  }
+
+#+end_src
+
+
+* BACKGROUND
+#+begin_src conf :tangle hyprlock.conf
+  background {
+      monitor =
+      path = $HOME/.config/wallpapers/wp-ferrari-f40
+      blur_passes = 2
+      color = 
+      }
+
+#+end_src
+
+
+* TIME LABEL
+#+begin_src conf :tangle hyprlock.conf
+  label {
+      monitor =
+      text = cmd[update:30000] date +"%R"
+      color = $text
+      font_size = 90
+      font_family = $font
+      position = 0, 20%
+      halign = center
+      valign = center
+      }
+
+
+#+end_src
+
+
+* DATE LABEL
+#+begin_src conf :tangle hyprlock.conf
+  label {
+      monitor = 
+      text = cmd[update:43200000] date +"%A, %d %B %Y"
+      color = $text
+      font_size = 25
+      font_family = $font
+      position = 0, 10%
+      halign = center
+      valign = center
+      }
+
+
+#+end_src
+
+
+* USER AVATAR
+#+begin_src conf :tangle hyprlock.conf
+  image {
+      monitor = 
+      path = ~/.face
+      size = 100
+      border_color = $accent
+
+      position = 0, 75
+      halign = center
+      valign = center
+      }
+
+
+#+end_src
+
+
+* INPUT FIELD
+#+begin_src conf :tangle hyprlock.conf
+  input-field {
+      monitor =
+      size = 300, 60
+      outline_thickness = 4
+      dots_size = 0.2
+      dots_spacing = 0.2
+      dots_center = true
+      outer_color = $accent
+      inner_color = $surface0
+      font_color = $text
+      fade_on_empty = false
+      placeholder_text = <span foreground="##$textAlpha"><i>󰌾 Logged in as </i><span foreground="##$accentAlpha">$USER</span></span>
+      hide_input = false
+      check_color = $accent
+      fail_color = $red
+      fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i>
+      capslock_color = $yellow
+      position = 0, -35
+      halign = center
+      valign = center
+      }
+
+
+#+end_src
+
+
