@@ -1,0 +1,24 @@
+#!/bin/bash
+# Listener mode
+if [ "$1" == "--listen" ]; then
+    # Create FIFO pipe for instant updates
+    pipe="/tmp/asus-pipe"
+    [ -p "$pipe" ] || mkfifo "$pipe"
+    
+    # Continuous profile monitoring
+    asusctl profile -p | grep -oE 'Quiet|Balanced|Performance' > "$pipe" &
+    while true; do
+        # Read current profile
+        read -r profile < "$pipe"
+        echo "$profile" > /tmp/asus-current
+        sleep 5
+    done
+    exit
+fi
+
+# Click handler mode
+if [ "$1" == "--cycle" ]; then
+    # Cycle profile and update cache
+    asusctl profile -n
+    exit
+fi
