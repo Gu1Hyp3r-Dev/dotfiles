@@ -386,7 +386,7 @@ This package is responsible for controlling wallpapers.
   bind = $mainMod, J, togglesplit, # dwindle
   bind = $mainMod SHIFT, R, exec, hyprctl reload
   bind = $mainMod, L, exec, hyprlock
-  bind = $mainMod, T, exec, [float] emacsclient -cF "((visibility . nil))" -e "(emacs-counsel-launcher)"
+  bind = $mainMod, T, exec, [float] emacsclient -cF "((visibility . nil))" -e "(emacs-run-launcher)"
 
 
 #+end_src

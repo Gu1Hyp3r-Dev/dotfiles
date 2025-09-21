@@ -224,14 +224,13 @@
                   (internal-border-width . 10)
                   (width . 80)
                   (height . 11)
-                 )
+                 ))
                 (unwind-protect
                   (app-launcher-run-app)
                   (delete-frame)
                 )
     )
   )
-)
 
 (require 'windmove)
 
