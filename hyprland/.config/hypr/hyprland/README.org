@@ -12,6 +12,7 @@
   - [[#initialize-monitors][Initialize monitors]]
   - [[#initialize-workspaces][Initialize workspaces]]
 - [[#my-programs][MY PROGRAMS]]
+- [[#window-rules][WINDOW RULES]]
 - [[#environment-variables][ENVIRONMENT VARIABLES]]
   - [[#cursor][Cursor]]
   - [[#primary-gpu-amd][Primary GPU (AMD)]]
@@ -118,6 +119,12 @@ This package is responsible for controlling wallpapers.
   $terminal = kitty
   $fileManager = thunar
   $menu = wofi --show drun
+
+#+end_src
+
+* WINDOW RULES
+#+begin_src conf
+ windowrule = float, title:^emacs-run-launcher$ 
 
 #+end_src
 
@@ -379,6 +386,7 @@ This package is responsible for controlling wallpapers.
   bind = $mainMod, J, togglesplit, # dwindle
   bind = $mainMod SHIFT, R, exec, hyprctl reload
   bind = $mainMod, L, exec, hyprlock
+  bind = $mainMod, T, exec, [float] emacsclient -cF "((visibility . nil))" -e "(emacs-counsel-launcher)"
 
 
 #+end_src
