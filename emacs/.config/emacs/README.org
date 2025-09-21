@@ -3,6 +3,7 @@
 #+DESCRIPTION: GH's personal Emacs config.
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
+#+PROPERTY: header-args :tangle config.el
 
 * Table of Contents :toc:
 - [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
@@ -176,7 +177,7 @@
      
      (gh/leader-keys
        "f" '(:ignore f :wk "files")
-       "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+       "f c" '((lambda () (interactive) (find-file "~/.config/emacs/README.org")) :wk "Edit emacs config")
        "f r" '(counsel-recentf :wk "Find recent files") 
        "f t" '(org-babel-tangle :wk "Tangle org file") 
 
@@ -265,14 +266,13 @@ It list the apps by their executable command, so it's kind of tricky to use.
                     (internal-border-width . 10)
                     (width . 80)
                     (height . 11)
-                   )
+                   ))
                   (unwind-protect
                     (counsel-linux-app)
                     (delete-frame)
                   )
-      )
+  	)
     )
-  )
 
 #+end_src
 

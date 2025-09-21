@@ -116,7 +116,7 @@ This package is responsible for controlling wallpapers.
 * MY PROGRAMS
 #+begin_src conf
   $terminal = kitty
-  $fileManager = dolphin
+  $fileManager = thunar
   $menu = wofi --show drun
 
 #+end_src
@@ -127,15 +127,15 @@ This package is responsible for controlling wallpapers.
 #+begin_src conf
   env = XCURSOR_SIZE, 24
   env = HYPRCURSOR_SIZE, 24
-  env = WLR_NO_HARDWARE_CURSORS, 1
+  #env = no_hardware_cursors, 1
   env = WLR_REDERER_ALLOW_SOFTWARE, 1
 
 #+end_src
 
 ** Primary GPU (AMD)
 #+begin_src conf
-  env = WLR_DRM_DEVICES, /dev/dri/card0
-  env = LIBVA_DRIVER_NAME, radeonsi
+  env = WLR_DRM_DEVICES, /dev/dri/card1
+  env = LIBVA_DRIVER_NAME, nvidia
   env = GBM_BACKEND, nvidia-drm
   env = __GLX_VENDOR_LIBRARY_NAME, mesa
   env = WLR_DRM_NO_ATOMIC, 1
@@ -191,6 +191,7 @@ This package is responsible for controlling wallpapers.
 #+begin_src conf
   exec-once = waybar
   exec-once = dunst
+  exec-once = ~/.config/swww/swww.sh
 
 #+end_src
 
@@ -348,7 +349,11 @@ This package is responsible for controlling wallpapers.
 
   # https://wiki.hyprland.org/Configuring/Variables/#gestures
   gestures {
-      workspace_swipe = true
+      #workspace_swipe = true
+  }
+
+  cursor {
+      no_hardware_cursors = true
   }
 
 #+end_src
@@ -380,7 +385,7 @@ This package is responsible for controlling wallpapers.
 
 ** SWWW change random wallpaper
 #+begin_src conf
-  bind = $mainMod, W, exec, ~/.config/swww/swww.sh; sleep 1.5
+  bind = $mainMod, W, exec, ~/.config/swww/swww.sh
 
 #+end_src
 
@@ -461,14 +466,8 @@ This package is responsible for controlling wallpapers.
   bindl = , XF86AudioPrev, exec, playerctl -p spotify previous
 
   # Screenshots
-  bind = $mainMod, S, submap, screenshots
-  submap = screenshots
-
-  binde = , W, exec, hyprctl screenshot window
-  binde = , M, exec, hyprctl screenshot monitor
-
-  bind = , escape, submap, reset
-  submap = reset
+  bind = $mainMod, S, exec, slurp | grim -g - - | tee ~/Pictures/Screenshots/$(date +%s).png | wl-copy
+  #bind = , , exec, slurp | grim -g - - | tee ~/Pictures/$(date +%s).png | wl-copy
 
 #+end_src
 

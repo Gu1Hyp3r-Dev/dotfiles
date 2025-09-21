@@ -123,7 +123,7 @@
    
    (gh/leader-keys
      "f" '(:ignore f :wk "files")
-     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/README.org")) :wk "Edit emacs config")
      "f r" '(counsel-recentf :wk "Find recent files") 
      "f t" '(org-babel-tangle :wk "Tangle org file") 
 
@@ -195,14 +195,13 @@
                   (internal-border-width . 10)
                   (width . 80)
                   (height . 11)
-                 )
+                 ))
                 (unwind-protect
                   (counsel-linux-app)
                   (delete-frame)
                 )
-    )
+	)
   )
-)
 
 (use-package app-launcher
   :ensure '(app-launcher :host github :repo "SebastienWae/app-launcher")

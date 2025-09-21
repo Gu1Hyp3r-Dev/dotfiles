@@ -138,6 +138,18 @@ button:hover {
     
 }
 
+#custom-arch {
+    color: @mauve;
+    border-bottom: 2px solid @mauve;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+
+}
+
 #custom-gpumode {
     color: @orange;
     border-bottom: 2px solid @orange;

@@ -46,3 +46,5 @@ ln -sf "$NEW_WALLPAPER_DIR" "${WALLPAPER_DIR}active-wallpaper"
 echo "New wallpaper dir: $NEW_WALLPAPER_DIR"
 
 swww img --transition-fps 165 --transition-duration 1.5 "$NEW_WALLPAPER_DIR" --transition-type any
+
+swww clear-cache

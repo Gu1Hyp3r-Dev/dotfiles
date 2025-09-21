@@ -15,7 +15,7 @@
     "format-charging": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
     "format-plugged": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
     "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {time}",
-    "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+    "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
     "format-icons": ["", "", "", "", ""],
     "tooltip-format": "{time}"
   },
@@ -42,15 +42,20 @@
     "tooltip": true,
     "tooltip-format": "ASUS Profile: {}"
   },
-      "position": "top",
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["hyprland/window"],
-  "modules-right": [
-    "custom/asusprofile",
-    "network", 
-    "pulseaudio", 
-    "battery", 
-    "clock"
-  ]
+  "custom/arch": {
+    "exec": "echo | uname -r",
+    "format": "<span size='13000' foreground='#cba6f7'> </span> <span>{}</span>"
+  },
+    "position": "top",
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": [
+      "custom/arch",
+      "custom/asusprofile",
+      "network", 
+      "pulseaudio", 
+      "battery", 
+      "clock"
+    ]
 
 }
