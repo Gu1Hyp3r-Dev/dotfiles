@@ -13,7 +13,7 @@
 - [[#all-the-icons][ALL THE ICONS]]
 - [[#app-launcher][APP LAUNCHER]]
   - [[#counsel-linux-app][Counsel-Linux-App]]
-  - [[#app-launcher-1][App-Launcher]]
+  - [[#app-launcher-preferred][App-Launcher (Preferred)]]
 - [[#buffer-move][BUFFER MOVE]]
 - [[#fonts][FONTS]]
   - [[#setting-the-font-face][Setting The Font Face]]
@@ -276,7 +276,7 @@ It list the apps by their executable command, so it's kind of tricky to use.
 
 #+end_src
 
-** App-Launcher
+** App-Launcher (Preferred)
 #+begin_src emacs-lisp
 
   (use-package app-launcher
