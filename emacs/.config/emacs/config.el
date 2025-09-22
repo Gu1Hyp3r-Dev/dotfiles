@@ -505,7 +505,7 @@ one, an error is signaled."
 
 (use-package vterm
   :config
-  (setq shell-file-name "bin/kitty"
+  (setq shell-file-name "/bin/fish"
         vterm-max-scrollback 5000
 	)
   )

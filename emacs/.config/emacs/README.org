@@ -753,7 +753,7 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' setting sets th
 #+begin_src emacs-lisp
 (use-package vterm
   :config
-  (setq shell-file-name "bin/kitty"
+  (setq shell-file-name "/bin/fish"
         vterm-max-scrollback 5000
 	)
   )
