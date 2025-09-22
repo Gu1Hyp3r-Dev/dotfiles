@@ -15,6 +15,7 @@
   - [[#counsel-linux-app][Counsel-Linux-App]]
   - [[#app-launcher-preferred][App-Launcher (Preferred)]]
 - [[#buffer-move][BUFFER MOVE]]
+- [[#dashboard][DASHBOARD]]
 - [[#fonts][FONTS]]
   - [[#setting-the-font-face][Setting The Font Face]]
   - [[#zooming-inout][Zooming In/Out]]
@@ -28,6 +29,7 @@
   - [[#disable-electric-indent][Disable Electric Indent]]
   - [[#source-code-block-tag-expansion][Source Code Block Tag Expansion]]
   - [[#my-actual-changes][My Actual Changes]]
+- [[#projectile][PROJECTILE]]
 - [[#rainbow-mode][RAINBOW MODE]]
 - [[#shells-and-terminals][SHELLS AND TERMINALS]]
   - [[#esheel][Esheel]]
@@ -43,44 +45,44 @@
 
 #+begin_src emacs-lisp
   (defvar elpaca-installer-version 0.11)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil :depth 1 :inherit ignore
-                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-                              :build (:not elpaca--activate-package)))
-(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-       (build (expand-file-name "elpaca/" elpaca-builds-directory))
-       (order (cdr elpaca-order))
-       (default-directory repo))
-  (add-to-list 'load-path (if (file-exists-p build) build repo))
-  (unless (file-exists-p repo)
-    (make-directory repo t)
-    (when (<= emacs-major-version 28) (require 'subr-x))
-    (condition-case-unless-debug err
-        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-                                                  ,@(when-let* ((depth (plist-get order :depth)))
-                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
-                                                  ,(plist-get order :repo) ,repo))))
-                  ((zerop (call-process "git" nil buffer t "checkout"
-                                        (or (plist-get order :ref) "--"))))
-                  (emacs (concat invocation-directory invocation-name))
-                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                  ((require 'elpaca))
-                  ((elpaca-generate-autoloads "elpaca" repo)))
-            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-string))))
-      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-  (unless (require 'elpaca-autoloads nil t)
-    (require 'elpaca)
-    (elpaca-generate-autoloads "elpaca" repo)
-    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
-(add-hook 'after-init-hook #'elpaca-process-queues)
-(elpaca `(,@elpaca-order))
-
+  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                                :ref nil :depth 1 :inherit ignore
+                                :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                                :build (:not elpaca--activate-package)))
+  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+         (build (expand-file-name "elpaca/" elpaca-builds-directory))
+         (order (cdr elpaca-order))
+         (default-directory repo))
+    (add-to-list 'load-path (if (file-exists-p build) build repo))
+    (unless (file-exists-p repo)
+      (make-directory repo t)
+      (when (<= emacs-major-version 28) (require 'subr-x))
+      (condition-case-unless-debug err
+          (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                    ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                    ,@(when-let* ((depth (plist-get order :depth)))
+                                                        (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                    ,(plist-get order :repo) ,repo))))
+                    ((zerop (call-process "git" nil buffer t "checkout"
+                                          (or (plist-get order :ref) "--"))))
+                    (emacs (concat invocation-directory invocation-name))
+                    ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                          "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                    ((require 'elpaca))
+                    ((elpaca-generate-autoloads "elpaca" repo)))
+              (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+            (error "%s" (with-current-buffer buffer (buffer-string))))
+        ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+    (unless (require 'elpaca-autoloads nil t)
+      (require 'elpaca)
+      (elpaca-generate-autoloads "elpaca" repo)
+      (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+  (add-hook 'after-init-hook #'elpaca-process-queues)
+  (elpaca `(,@elpaca-order))
+  
 #+end_src
 
 ** Load Evil Mode
@@ -136,20 +138,21 @@
   (use-package general
     :config
     (general-evil-setup)
-
+    
     ;; set up 'SPC' as the global leader key
     (general-create-definer gh/leader-keys
       :states '(normal insert visual emacs)
       :keymaps 'override
       :prefix "SPC" ;; set leader
       :global-prefix "M-SPC" ;; access leader in insert mode
-    )
-
+      )
+    
     (gh/leader-keys
+      "SPC" '(counsel-M-x :wk "Counsel M-x")
       "." '(find-file :wk "Find File")
       "TAB TAB" '(comment-line :wk "Comment lines")
-    )
-
+      )
+    
     (gh/leader-keys
       "b" '(:ignore t :wk "buffer")
       "b b" '(switch-to-buffer :wk "Switch buffer")
@@ -158,71 +161,90 @@
       "b n" '(next-buffer :wk "Next buffer")
       "b p" '(previous-buffer :wk "Previous buffer")
       "b r" '(revert-buffer :wk "Reload buffer")
-     )
+      )
 
-     (gh/leader-keys
-       "e" '(:ignore t :wk "Eshell/Evaluate")
-
-       ;; Evaluate Keybinds
-       "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-       "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-       "e e" '(eval-expression :wk "Evaluate and elisp expression")
-       "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-       "e r" '(eval-region :wk "Evaluate elisp in region")
-
-        ;; Eshell Keybinds
-        "e h" '(counsel-esh-history :which-key "Eshell history")
-        "e s" '(eshell :which-key "Eshell")
+    (gh/leader-keys
+      "e" '(:ignore t :wk "Eshell/Evaluate")
+      
+      ;; Evaluate Keybinds
+      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+      "e e" '(eval-expression :wk "Evaluate and elisp expression")
+      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+      "e r" '(eval-region :wk "Evaluate elisp in region")
+      
+      ;; Eshell Keybinds
+      "e h" '(counsel-esh-history :which-key "Eshell history")
+      "e s" '(eshell :which-key "Eshell")
       )
      
-     (gh/leader-keys
-       "f" '(:ignore f :wk "files")
-       "f c" '((lambda () (interactive) (find-file "~/.config/emacs/README.org")) :wk "Edit emacs config")
-       "f r" '(counsel-recentf :wk "Find recent files") 
-       "f t" '(org-babel-tangle :wk "Tangle org file") 
-
+    (gh/leader-keys
+      "f" '(:ignore f :wk "files")
+      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/README.org")) :wk "Edit emacs config")
+      "f r" '(counsel-recentf :wk "Find recent files") 
+      )
+    
+    
+    (gh/leader-keys
+      "h" '(:ignore t :wk "Help")
+      "h f" '(describe-function :wk "Describe function")
+      "h v" '(describe-variable :wk "Describe variable")
+      "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
+      ;; "h r r" '(reload-init-file :wk "Reload emacs config")
+      )
+    
+    (gh/leader-keys
+      "m" '(:ignore t :wk "Org")
+      "m a" '(org-agenda :wk "Org agenda")
+      "m e" '(org-export-dispatch :wk "Org export dispatch")
+      "m i" '(org-toggle-item :wk "Org toggle item")
+      "m t" '(org-todo :wk "Org todo")
+      "m B" '(org-babel-tangle :wk "Org babel tangle")
+      "m T" '(org-todo-list :wk "Org todo list")
       )
 
-
-      (gh/leader-keys
-        "h" '(:ignore t :wk "Help")
-        "h f" '(describe-function :wk "Describe function")
-        "h v" '(describe-variable :wk "Describe variable")
-        "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
-        ;; "h r r" '(reload-init-file :wk "Reload emacs config")
+    (gh/leader-keys
+      "m b" '(:ignore t :wk "Tables")
+      "m b -" '(org-table-insert-hline :wk "Insert hline in table")
       )
 
-      (gh/leader-keys
-        "t" '(:ignore t :wk "Toggle")
-        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-        "t t" '(visual-line-mode :wk "Toggle truncated lines")
-        "t v" '(vterm-toggle :wk "Toggle vterm")
+    (gh/leader-keys
+      "m d" '(:ignore t :wk "Date/deadline")
+      "m d t" '(org-time-stamp :wk "Org time stamp")
       )
 
-      (gh/leader-keys
-        "w" '(:ignore t :wk "Windows")
-
-        ;; Windows splits
-        "w c" '(evil-window-delete :wk "Close window")
-        "w n" '(evil-window-new :wk "New window")
-        "w s" '(evil-window-split :wk "Horizontal split window")
-        "w v" '(evil-window-vsplit :wk "Vertical split window")
-
-        ;; Windows motions
-        "w h" '(evil-window-left :wk "Window left")
-        "w j" '(evil-window-down :wk "Window down")
-        "w k" '(evil-window-up :wk "Window up")
-        "w l" '(evil-window-right :wk "Windows right")
-        "w w" '(evil-window-next :wk "Goto next window")
-
-        ;; Move Windows
-        "w H" '(buf-move-left :wk "Buffer move left")
-        "w J" '(buf-move-down :wk "Buffer move down")
-        "w K" '(buf-move-up :wk "Buffer move up")
-        "w L" '(buf-move-right :wk "Buffer move right")
+    
+    (gh/leader-keys
+      "t" '(:ignore t :wk "Toggle")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t t" '(visual-line-mode :wk "Toggle truncated lines")
+      "t v" '(vterm-toggle :wk "Toggle vterm")
       )
-
-  )
+    
+    (gh/leader-keys
+      "w" '(:ignore t :wk "Windows")
+      
+      ;; Windows splits
+      "w c" '(evil-window-delete :wk "Close window")
+      "w n" '(evil-window-new :wk "New window")
+      "w s" '(evil-window-split :wk "Horizontal split window")
+      "w v" '(evil-window-vsplit :wk "Vertical split window")
+      
+      ;; Windows motions
+      "w h" '(evil-window-left :wk "Window left")
+      "w j" '(evil-window-down :wk "Window down")
+      "w k" '(evil-window-up :wk "Window up")
+      "w l" '(evil-window-right :wk "Windows right")
+      "w w" '(evil-window-next :wk "Goto next window")
+      
+      ;; Move Windows
+      "w H" '(buf-move-left :wk "Buffer move left")
+      "w J" '(buf-move-down :wk "Buffer move down")
+      "w K" '(buf-move-up :wk "Buffer move up")
+      "w L" '(buf-move-right :wk "Buffer move right")
+      )
+    
+    )
 
 #+end_src
 
@@ -234,14 +256,14 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
   (use-package all-the-icons
     :ensure t
     :if
-      (display-graphic-p)
-  )
-  
+    (display-graphic-p)
+    )
+
   (use-package all-the-icons-dired
     :hook
-      (dired-mode . (lambda () (all-the-icons-dired-mode t)))
-  )
-
+    (dired-mode . (lambda () (all-the-icons-dired-mode t)))
+    )
+  
 #+end_src
 
 
@@ -256,24 +278,24 @@ It list the apps by their executable command, so it's kind of tricky to use.
     "Create and select a frame called emacs-counsel-launcher which consists only of a minibuffer and has specific dimensions. Runs counsel-linux-app on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
     (interactive)
     (with-selected-frame
-      (make-frame '((name . "emacs-run-launcher")
-                    (minibuffer . only)
-                    (fullscreen . 0) ; no fullscreen
-                    (undecorated . t) ; remove title bar
-                    ;; (auto-raise . t) ; focus on this frame
-                    ;; (tool-bar-lines . 0)
-                    ;; (menu-bar-lines . 0)
-                    (internal-border-width . 10)
-                    (width . 80)
-                    (height . 11)
-                   ))
-                  (unwind-protect
-                    (counsel-linux-app)
-                    (delete-frame)
-                  )
-  	)
+        (make-frame '((name . "emacs-run-launcher")
+                      (minibuffer . only)
+                      (fullscreen . 0) ; no fullscreen
+                      (undecorated . t) ; remove title bar
+                      ;; (auto-raise . t) ; focus on this frame
+                      ;; (tool-bar-lines . 0)
+                      ;; (menu-bar-lines . 0)
+                      (internal-border-width . 10)
+                      (width . 80)
+                      (height . 11)
+                      ))
+      (unwind-protect
+          (counsel-linux-app)
+        (delete-frame)
+        )
+      )
     )
-
+  
 #+end_src
 
 ** App-Launcher (Preferred)
@@ -281,8 +303,8 @@ It list the apps by their executable command, so it's kind of tricky to use.
 
   (use-package app-launcher
     :ensure '(app-launcher :host github :repo "SebastienWae/app-launcher")
-  )
-  
+    )
+
   ;; create a global keyboard shortcut with the following code
   ;; emacsclient -cF "((visibility . nil))" -e "(emacs-run-launcher)"
 
@@ -290,24 +312,24 @@ It list the apps by their executable command, so it's kind of tricky to use.
     "Create and select a frame called emacs-counsel-launcher which consists only of a minibuffer and has specific dimensions. Runs counsel-linux-app on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
     (interactive)
     (with-selected-frame
-      (make-frame '((name . "emacs-run-launcher")
-                    (minibuffer . only)
-                    (fullscreen . 0) ; no fullscreen
-                    (undecorated . t) ; remove title bar
-                    ;; (auto-raise . t) ; focus on this frame
-                    ;; (tool-bar-lines . 0)
-                    ;; (menu-bar-lines . 0)
-                    (internal-border-width . 10)
-                    (width . 80)
-                    (height . 11)
-                   ))
-                  (unwind-protect
-                    (app-launcher-run-app)
-                    (delete-frame)
-                  )
+        (make-frame '((name . "emacs-run-launcher")
+                      (minibuffer . only)
+                      (fullscreen . 0) ; no fullscreen
+                      (undecorated . t) ; remove title bar
+                      ;; (auto-raise . t) ; focus on this frame
+                      ;; (tool-bar-lines . 0)
+                      ;; (menu-bar-lines . 0)
+                      (internal-border-width . 10)
+                      (width . 80)
+                      (height . 11)
+                      ))
+      (unwind-protect
+          (app-launcher-run-app)
+        (delete-frame)
+        )
       )
     )
-
+  
 #+end_src
 
 
@@ -318,72 +340,104 @@ https://www.emacswiki.org/emacs/buffer-move.el
 
   (require 'windmove)
 
-;;;###autoload
-(defun buf-move-up ()
-  "Swap the current buffer and the buffer above the split.
-If there is no split, ie now window above the current one, an
-error is signaled."
-;;  "Switches between the current buffer, and the buffer above the
-;;  split, if possible."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'up))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No window above this one")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
+  ;;;###autoload
+  (defun buf-move-up ()
+    "Swap the current buffer and the buffer above the split.
+  If there is no split, ie now window above the current one, an
+  error is signaled."
+    ;;  "Switches between the current buffer, and the buffer above the
+    ;;  split, if possible."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'up))
+  	 (buf-this-buf (window-buffer (selected-window))))
+      (if (null other-win)
+          (error "No window above this one")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win))))
 
-;;;###autoload
-(defun buf-move-down ()
-"Swap the current buffer and the buffer under the split.
-If there is no split, ie now window under the current one, an
-error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'down))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (or (null other-win) 
-            (string-match "^ \\*Minibuf" (buffer-name (window-buffer other-win))))
-        (error "No window under this one")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
+  ;;;###autoload
+  (defun buf-move-down ()
+    "Swap the current buffer and the buffer under the split.
+  If there is no split, ie now window under the current one, an
+  error is signaled."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'down))
+  	 (buf-this-buf (window-buffer (selected-window))))
+      (if (or (null other-win) 
+              (string-match "^ \\*Minibuf" (buffer-name (window-buffer other-win))))
+          (error "No window under this one")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win))))
 
-;;;###autoload
-(defun buf-move-left ()
-"Swap the current buffer and the buffer on the left of the split.
-If there is no split, ie now window on the left of the current
-one, an error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'left))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No left split")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
+  ;;;###autoload
+  (defun buf-move-left ()
+    "Swap the current buffer and the buffer on the left of the split.
+  If there is no split, ie now window on the left of the current
+  one, an error is signaled."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'left))
+  	 (buf-this-buf (window-buffer (selected-window))))
+      (if (null other-win)
+          (error "No left split")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win))))
 
-;;;###autoload
-(defun buf-move-right ()
-"Swap the current buffer and the buffer on the right of the split.
-If there is no split, ie now window on the right of the current
-one, an error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'right))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No right split")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win)))) 
+  ;;;###autoload
+  (defun buf-move-right ()
+    "Swap the current buffer and the buffer on the right of the split.
+  If there is no split, ie now window on the right of the current
+  one, an error is signaled."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'right))
+  	 (buf-this-buf (window-buffer (selected-window))))
+      (if (null other-win)
+          (error "No right split")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win)))) 
+  
+#+end_src
+
+
+* DASHBOARD
+Emacs Dashboard is an extensible startup screen showing you recent files, bookmarks, agenda items and an Emacs banner.
+
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :init
+    (setq initial-buffer-choice 'dashboard-open)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-banner-logo-title "Emacs is more than a Text Editor!!")
+    ;;(setq dashboard-startup-banner 'logo) ;; Uses a standart Emacs logo as banner
+    (setq dashboard-startup-banner "~/.config/emacs/images/emacs-dash.png")
+    (setq dashboard-center-content nil)
+    (setq dashboard-items '((recents . 5)
+  			  (agenda . 5)
+  			  (bookmarks . 3)
+  			  (projects . 3)
+  			  (registers . 3)
+  			  )
+  	)
+    (dashboard-modify-heading-icons '((recents . "file-text")
+  				    (bookmarks . "book")
+  				    )
+  				  )
+    :config
+    (dashboard-setup-startup-hook)
+    )
 
 #+end_src
 
@@ -394,23 +448,23 @@ Defining the various fonts that emacs will use.
 ** Setting The Font Face
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil
-    :font "CaskaydiaCove Nerd Font Mono"
-    :height 100
-    :weight 'medium)
+  		    :font "CaskaydiaCove Nerd Font Mono"
+  		    :height 100
+  		    :weight 'medium)
   (set-face-attribute 'variable-pitch nil
-    :font "CaskaydiaCove Nerd Font"
-    :height 100
-    :weight 'medium)
+  		    :font "CaskaydiaCove Nerd Font"
+  		    :height 100
+  		    :weight 'medium)
   (set-face-attribute 'fixed-pitch nil
-    :font "CaskaydiaCove Nerd Font Mono"
-    :height 100
-    :weight 'medium)
+  		    :font "CaskaydiaCove Nerd Font Mono"
+  		    :height 100
+  		    :weight 'medium)
   ;; Makes commented text and keywords italics.
   ;; This is working in emacsclient but not emacs.
   (set-face-attribute 'font-lock-comment-face nil
-    :slant 'italic)
+  		    :slant 'italic)
   (set-face-attribute 'font-lock-keyword-face nil
-    :slant 'italic)
+  		    :slant 'italic)
 
   ;; This sets the default font on all graphical frames created after restarting E...
   ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fo...
@@ -419,7 +473,7 @@ Defining the various fonts that emacs will use.
 
   ;; Uncomment the following line if line spacing needs adjusting.
   (setq-default line-spacing 0.12)
-
+  
 #+end_src
 
 ** Zooming In/Out
@@ -430,8 +484,8 @@ You can use the bindings CTRL plus +/- for zooming in/out. You can also use CTRL
   (global-set-key (kbd "C--") 'text-scale-decrease)
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
-
   
+
 #+end_src
 
 
@@ -444,7 +498,7 @@ Let's make GNU emacs look a little better.
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
-
+  
 #+end_src
 
 ** Display Line Numbers and Truncated Lines
@@ -452,7 +506,7 @@ Let's make GNU emacs look a little better.
 
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
-
+  
 #+end_src
 
 
@@ -465,45 +519,45 @@ Let's make GNU emacs look a little better.
   (use-package counsel
     :after ivy
     :config (counsel-mode)
-  )
+    )
 
   (use-package ivy
     :bind
-  ;; ivy-resume resumes the last Ivy-based completion.
-      (("C-c C-r" . ivy-resume)
-       ("C-x B" . ivy-switch-buffer-other-window)  
-      )
+    ;; ivy-resume resumes the last Ivy-based completion.
+    (("C-c C-r" . ivy-resume)
+     ("C-x B" . ivy-switch-buffer-other-window)  
+     )
     :custom
-      (setq ivy-use-virtual-buffers t)
-      (setq ivy-count-format "(%d/%d)")
-      (setq enable-recursive-minibuffers t)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d)")
+    (setq enable-recursive-minibuffers t)
     :config
-      (ivy-mode)
-  )
-  
+    (ivy-mode)
+    )
+
   (use-package all-the-icons-ivy-rich
     :ensure t
     :init
-      (all-the-icons-ivy-rich-mode t)
-  )
+    (all-the-icons-ivy-rich-mode t)
+    )
 
   (use-package ivy-rich
     :after ivy
     :ensure t
     :init
-      (ivy-rich-mode 1) ;; this gets us description in M-x.
+    (ivy-rich-mode 1) ;; this gets us description in M-x.
     :custom
-      (ivy-virtual-abreviate 'full
-       ivy-rich-switch-buffer-align-virtual-buffer t
-       ivy-rich-path-style 'abbrev
-      )
+    (ivy-virtual-abreviate 'full
+  			 ivy-rich-switch-buffer-align-virtual-buffer t
+  			 ivy-rich-path-style 'abbrev
+  			 )
     :config
-      (ivy-set-display-transformer
-        'ivy-switch-buffer
-        'ivy-rich-switch-buffer-transformer
-      )
-  )
-
+    (ivy-set-display-transformer
+     'ivy-switch-buffer
+     'ivy-rich-switch-buffer-transformer
+     )
+    )
+  
 #+end_src
 
 
@@ -515,7 +569,7 @@ Let's make GNU emacs look a little better.
   (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable)
-  )
+    )
 
 #+end_src
 
@@ -526,14 +580,14 @@ Org-bullets gives us attractive bullets rather than asterisks.
   (add-hook 'org-mode-hook 'org-indent-mode)
   (use-package org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-
+  
 #+end_src
 
 ** Disable Electric Indent
 Org mode source blocks have some really weird and annoying default indentation behavior. I think this has to do with electric-indent-mode, which is turned on by default in Emacs. So let's turned it off.
 #+begin_src emacs-lisp
-
-  (electric-indent-mode -1)
+(electric-indent-mode -1)
+(setq org-edit-src-content-indentation 0)
 
 #+end_src
 
@@ -556,16 +610,27 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 +------------------------+-------------------------------------------+
 
 #+begin_src emacs-lisp
-
-  (require 'org-tempo)
+(require 'org-tempo)
 
 #+end_src
 
+
 ** My Actual Changes
 Here I change some stuff (unorganized)
-#+begin_src emacs-lisp
 
-  ;; (setq org-support-shift-select 'always)
+#+begin_src emacs-lisp
+;; (setq org-support-shift-select 'always)
+
+#+end_src
+
+
+* PROJECTILE
+Projectile is a project interaction library for Emacs. It should be noted that many project commands do not work if you have "fish" as the "shell-file-name" for Emacs. Had initially set "fish" as the "shell-file-name" in the Vterm section of this config, but oddly enough i changed it to "bin/sh" and projectile now works as expected and Vterm still uses "fish" because my default user "sh" on my Linux system is "fish".
+#+begin_src emacs-lisp
+  (use-package projectile
+    :config
+    (projectile-mode 1)
+    )
 
 #+end_src
 
@@ -706,7 +771,7 @@ https://mswift42.github.io/themecreator/
 	    which-key-side-window-max-height 0.4
 	    which-key-idle-delay 0.8
 	    which-key-max-description-lenght 25
-	    which-key-allow-imprecise-window-fit t
+	    which-key-allow-imprecise-window-fit nil
           which-key-separator " -> "
       ) 
   )
