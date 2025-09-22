@@ -106,7 +106,7 @@
     "b p" '(previous-buffer :wk "Previous buffer")
     "b r" '(revert-buffer :wk "Reload buffer")
     )
-
+  
   (gh/leader-keys
     "e" '(:ignore t :wk "Eshell/Evaluate")
     
@@ -121,7 +121,7 @@
     "e h" '(counsel-esh-history :which-key "Eshell history")
     "e s" '(eshell :which-key "Eshell")
     )
-   
+  
   (gh/leader-keys
     "f" '(:ignore f :wk "files")
     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/README.org")) :wk "Edit emacs config")
@@ -146,17 +146,17 @@
     "m B" '(org-babel-tangle :wk "Org babel tangle")
     "m T" '(org-todo-list :wk "Org todo list")
     )
-
+  
   (gh/leader-keys
     "m b" '(:ignore t :wk "Tables")
     "m b -" '(org-table-insert-hline :wk "Insert hline in table")
     )
-
+  
   (gh/leader-keys
     "m d" '(:ignore t :wk "Date/deadline")
     "m d t" '(org-time-stamp :wk "Org time stamp")
     )
-
+  
   
   (gh/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -451,13 +451,13 @@ one, an error is signaled."
 (use-package rainbow-mode
   :ensure t
   :hook org-mode prog-mode
-)
+  )
 
 (use-package eshell-syntax-highlighting
   :after esh-mod
   :config
-    (esheel-syntax-highlighting-global-mode +1)
-)
+  (esheel-syntax-highlighting-global-mode +1)
+  )
 
 ;; eshell-syntax-highlighting -- adds fish/zsh-like syntax highlighting.
 ;; eshell-rc-srcipt -- your profile for eshell; like a bashrc for eshell.
@@ -471,22 +471,22 @@ one, an error is signaled."
       eshell-scroll-to-bottom-on-input t
       eshell-destroy-buffer-when-process-dies t
       eshell-visual-commands'("bash" "fish" "htop"  "ssh" "top" "zsh")
-)
+      )
 
 (use-package vterm
   :config
-    (setq shell-file-name "bin/kitty"
-          vterm-max-scrollback 5000
-    )
-)
+  (setq shell-file-name "bin/kitty"
+        vterm-max-scrollback 5000
+	)
+  )
 
 (use-package vterm-toggle
   :after vterm
   :config
-    (setq vterm-toogle-fullscreen-p nil)
-    (setq vterm-toggle-scope 'project)
-    (add-to-list 'display-buffer-alist
-                 '((lambda (buffer-or-name _)
+  (setq vterm-toogle-fullscreen-p nil)
+  (setq vterm-toggle-scope 'project)
+  (add-to-list 'display-buffer-alist
+               '((lambda (buffer-or-name _)
                    (let ((buffer (get-buffer buffer-or-name)))
                      (with-current-buffer buffer
                        (or (equal major-mode 'vterm-mode)
@@ -499,16 +499,16 @@ one, an error is signaled."
                  (reusable-frames . visible)
                  (window-height . 0.3)
                  )
-    )
-)
+	       )
+  )
 
 (use-package sudo-edit
   :config
-    (gh/leader-keys
-      "f u" '(sudo-edit-find-file :wk "Sudo find file")
-      "f U" '(sudo-edit :wk "Sudo edit file")
+  (gh/leader-keys
+    "f u" '(sudo-edit-find-file :wk "Sudo find file")
+    "f U" '(sudo-edit :wk "Sudo edit file")
     )
-)
+  )
 
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
 ;; (load-theme 'ghemacs-t1 t)
@@ -518,19 +518,19 @@ one, an error is signaled."
 
 (use-package which-key
   :init
-    (which-key-mode 1)
+  (which-key-mode 1)
   :config
-    (setq which-key-side-window-location 'bottom
-	    which-key-sort-order #'which-key-key-order-alpha
-	    which-key-sort-uppercase-first nil
-	    which-key-add-collumn-padding 1
-	    which-key-max-display-collumns nil
-	    which-key-min-display-lines 5
-	    which-key-side-window-slot -10
-	    which-key-side-window-max-height 0.4
-	    which-key-idle-delay 0.8
-	    which-key-max-description-lenght 25
-	    which-key-allow-imprecise-window-fit nil
+  (setq which-key-side-window-location 'bottom
+	which-key-sort-order #'which-key-key-order-alpha
+	which-key-sort-uppercase-first nil
+	which-key-add-collumn-padding 1
+	which-key-max-display-collumns nil
+	which-key-min-display-lines 5
+	which-key-side-window-slot -10
+	which-key-side-window-max-height 0.4
+	which-key-idle-delay 0.8
+	which-key-max-description-lenght 25
+	which-key-allow-imprecise-window-fit nil
         which-key-separator " -> "
-    ) 
-)
+	) 
+  )
