@@ -321,6 +321,24 @@ one, an error is signaled."
       (set-window-buffer other-win buf-this-buf)
       (select-window other-win))))
 
+(use-package company
+  :defer 2
+  :diminish
+  :custom
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .01) 
+  (company-minimum-prefix-lenght 0)
+  (company-show-numbers t)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t)
+  )
+
+(use-package company-box
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode)
+  )
+
 (use-package dashboard
   :ensure t
   :init
@@ -344,6 +362,15 @@ one, an error is signaled."
 				  )
   :config
   (dashboard-setup-startup-hook)
+  )
+
+(use-package diminish)
+
+(use-package flycheck
+  :ensure t
+  :defer t
+  :diminish
+  :init (global-flycheck-mode)
   )
 
 (set-face-attribute 'default nil
@@ -426,6 +453,9 @@ one, an error is signaled."
    'ivy-rich-switch-buffer-transformer
    )
   )
+
+(use-package haskell-mode)
+(use-package lua-mode)
 
 (use-package toc-org
   :commands toc-org-enable

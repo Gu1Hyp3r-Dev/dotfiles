@@ -15,7 +15,10 @@
   - [[#counsel-linux-app][Counsel-Linux-App]]
   - [[#app-launcher-preferred][App-Launcher (Preferred)]]
 - [[#buffer-move][BUFFER MOVE]]
+- [[#company][COMPANY]]
 - [[#dashboard][DASHBOARD]]
+- [[#diminish][DIMINISH]]
+- [[#flycheck][FLYCHECK]]
 - [[#fonts][FONTS]]
   - [[#setting-the-font-face][Setting The Font Face]]
   - [[#zooming-inout][Zooming In/Out]]
@@ -23,6 +26,7 @@
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and Truncated Lines]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
+- [[#language-support][LANGUAGE SUPPORT]]
 - [[#org-mode][ORG MODE]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
   - [[#enabling-org-bullets][Enabling Org Bullets]]
@@ -412,6 +416,31 @@ one, an error is signaled."
 #+end_src
 
 
+* COMPANY
+Company is a text completion framework for Emacs. The name stands for "complete anything". Completion will start automaticaly after you type a few letters. Use M-n and M-p to select, <return> to complete or <tab> to complete the common part.
+
+#+begin_src emacs-lisp
+(use-package company
+  :defer 2
+  :diminish
+  :custom
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .01) 
+  (company-minimum-prefix-lenght 0)
+  (company-show-numbers t)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t)
+  )
+
+(use-package company-box
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode)
+  )
+
+#+end_src
+
+
 * DASHBOARD
 Emacs Dashboard is an extensible startup screen showing you recent files, bookmarks, agenda items and an Emacs banner.
 
@@ -442,6 +471,29 @@ Emacs Dashboard is an extensible startup screen showing you recent files, bookma
   )
 
 #+end_src
+
+
+* DIMINISH
+This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes. With this package installed, you can add ':diminish' to any use-package block to hide that particular mode in the modeline.
+
+#+begin_src emacs-lisp
+(use-package diminish)
+
+#+end_src 
+
+
+* FLYCHECK
+Install =luacheck= from your linux distro's repositories for flycheck to work currectly with lua files. Install =python-pylint= for flycheck to work with python files. Haskell works with flycheck as long as =haskell-ghc= or =haskell-stack-ghc= is installed. For more information on language support for flycheck, read this. :( didnt know the link :(
+
+#+begin_src emacs-lisp
+(use-package flycheck
+  :ensure t
+  :defer t
+  :diminish
+  :init (global-flycheck-mode)
+  )
+
+#+end_src 
 
 
 * FONTS
@@ -561,6 +613,16 @@ Let's make GNU emacs look a little better.
    'ivy-rich-switch-buffer-transformer
    )
   )
+
+#+end_src
+
+
+* LANGUAGE SUPPORT
+Emacs has a built-in programming language modes for Lisp, Scheme, DSSSL, Ada, ASM, AWK, C, C++, Fortran, Icon, IDL (CORBA), IDLWARE, Java, Javascript, M4, Makefiles, Metafont, Modula2, Object Pascal, Objective-C, Octave, Pascal, Perl, Pike, PostScript, Prolog, Python, Ruby, Simula, SQL, Tcl, Verilog, and VHDL. Other languages will require you to install additional modes.
+
+#+begin_src emacs-lisp
+(use-package haskell-mode)
+(use-package lua-mode)
 
 #+end_src
 
