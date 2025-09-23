@@ -106,6 +106,14 @@
     "b p" '(previous-buffer :wk "Previous buffer")
     "b r" '(revert-buffer :wk "Reload buffer")
     )
+
+  (gh/leader-keys
+    "d" '(:ignore t :wk "Dired")
+    "d d" '(dired :wk "Open dired")
+    "d j" '(dired-jump :wk "Dired jump to current")
+    "d n" '(neotree-dir :wk "Open directory in neotree")
+    "d p" '(peep-dired :wk "Peep-dired")
+    )
   
   (gh/leader-keys
     "e" '(:ignore t :wk "Eshell/Evaluate")
@@ -161,8 +169,14 @@
   (gh/leader-keys
     "t" '(:ignore t :wk "Toggle")
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+    "t n" '(neotree-toggle :w "Toggle neotree")
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
     "t v" '(vterm-toggle :wk "Toggle vterm")
+    )
+
+  (gh/leader-keys
+    "T" '(:ignore t :wk "Themes")
+    "T d" '(load-theme :wk "Load Doom Emacs Themes")
     )
   
   (gh/leader-keys
@@ -366,6 +380,27 @@ one, an error is signaled."
 
 (use-package diminish)
 
+(use-package dired-open
+  :config
+  (setq dired-open-extensions '(("gif" . "sxiv")
+				("jpg" . "sxiv")
+				("png" . "sxiv")
+				("mkv" . "mpv")
+				("mp4" . "mpv")
+				)
+	)
+  )
+
+(use-package peep-dired
+  :after dired
+  :hook (evil-normalize-keymaps . peep-dired-hook)
+  :config
+  (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+  (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file)
+  (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+  (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+  )
+
 (use-package flycheck
   :ensure t
   :defer t
@@ -457,6 +492,27 @@ one, an error is signaled."
 (use-package haskell-mode)
 (use-package lua-mode)
 
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+	neo-show-hidden-files t
+	neo-window-width 55
+	neo-window-fixed-size nil
+	inhibit-compacting-font-caches t
+	projectile-switch-project-action 'neotree-projectile-action
+   )
+  (add-hook 'neotree-after-create-hook
+	    #'(lambda (_)
+		(with-current-buffer (get-buffer neo-buffer-name)
+		  (setq truncate-lines t)
+		  (setq word-wrap nil)
+		  (make-local-variable 'auto-hscroll-mode)
+		  (setq auto-hscroll-mode nil)
+		  )
+	       )
+	    )
+  )
+
 (use-package toc-org
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable)
@@ -541,10 +597,20 @@ one, an error is signaled."
   )
 
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t
+	)
+  )
+
 ;; (load-theme 'ghemacs-t1 t)
-(load-theme 'dtmacs t)
+;; (load-theme 'dtmacs t)
+(load-theme 'doom-challenger-deep t)
 
 ;; consult
+
+(add-to-list 'default-frame-alist '(alpha-background . 100))
 
 (use-package which-key
   :init

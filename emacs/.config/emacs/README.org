@@ -18,6 +18,7 @@
 - [[#company][COMPANY]]
 - [[#dashboard][DASHBOARD]]
 - [[#diminish][DIMINISH]]
+- [[#dired][DIRED]]
 - [[#flycheck][FLYCHECK]]
 - [[#fonts][FONTS]]
   - [[#setting-the-font-face][Setting The Font Face]]
@@ -27,6 +28,7 @@
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and Truncated Lines]]
 - [[#ivy-counsel][IVY (COUNSEL)]]
 - [[#language-support][LANGUAGE SUPPORT]]
+- [[#neotree][NEOTREE]]
 - [[#org-mode][ORG MODE]]
   - [[#enabling-table-of-contents][Enabling Table of Contents]]
   - [[#enabling-org-bullets][Enabling Org Bullets]]
@@ -42,6 +44,7 @@
 - [[#sudo-edit][SUDO EDIT]]
 - [[#theme][THEME]]
 - [[#to-do][TO-DO]]
+- [[#transparency][TRANSPARENCY]]
 - [[#which-key][WHICH-KEY]]
 
 * IMPORTANT PROGRAMS TO LOAD FIRST
@@ -168,6 +171,14 @@
     "b p" '(previous-buffer :wk "Previous buffer")
     "b r" '(revert-buffer :wk "Reload buffer")
     )
+
+  (gh/leader-keys
+    "d" '(:ignore t :wk "Dired")
+    "d d" '(dired :wk "Open dired")
+    "d j" '(dired-jump :wk "Dired jump to current")
+    "d n" '(neotree-dir :wk "Open directory in neotree")
+    "d p" '(peep-dired :wk "Peep-dired")
+    )
   
   (gh/leader-keys
     "e" '(:ignore t :wk "Eshell/Evaluate")
@@ -223,8 +234,14 @@
   (gh/leader-keys
     "t" '(:ignore t :wk "Toggle")
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+    "t n" '(neotree-toggle :w "Toggle neotree")
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
     "t v" '(vterm-toggle :wk "Toggle vterm")
+    )
+
+  (gh/leader-keys
+    "T" '(:ignore t :wk "Themes")
+    "T d" '(load-theme :wk "Load Doom Emacs Themes")
     )
   
   (gh/leader-keys
@@ -482,6 +499,33 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 #+end_src 
 
 
+* DIRED
+
+#+begin_src emacs-lisp
+(use-package dired-open
+  :config
+  (setq dired-open-extensions '(("gif" . "sxiv")
+				("jpg" . "sxiv")
+				("png" . "sxiv")
+				("mkv" . "mpv")
+				("mp4" . "mpv")
+				)
+	)
+  )
+
+(use-package peep-dired
+  :after dired
+  :hook (evil-normalize-keymaps . peep-dired-hook)
+  :config
+  (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+  (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file)
+  (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+  (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+  )
+
+#+end_src
+
+
 * FLYCHECK
 Install =luacheck= from your linux distro's repositories for flycheck to work currectly with lua files. Install =python-pylint= for flycheck to work with python files. Haskell works with flycheck as long as =haskell-ghc= or =haskell-stack-ghc= is installed. For more information on language support for flycheck, read this. :( didnt know the link :(
 
@@ -623,6 +667,39 @@ Emacs has a built-in programming language modes for Lisp, Scheme, DSSSL, Ada, AS
 #+begin_src emacs-lisp
 (use-package haskell-mode)
 (use-package lua-mode)
+
+#+end_src
+
+
+* NEOTREE
+Neotree is a file tree viewer. When you open neotree, it jumps to the current file thanks to neo-smart-open. The neo-window-fixed-size setting makes the neotree width be adjustable. NeoTree provides following themes: classic, ascii, arrow, icons, and nerd. Theme can be configured by setting "two" themes for neo-theme: one for the GUI and one for the terminal. I like to use 'SPC t' for 'toogle' keybindings, so I have used 'SPC t n' for toogle-neotree.
+
+| COMMAND        | DESCRIPTION                | KEYBINDING |
+|----------------+----------------------------+------------|
+| neotree-toogle | /Toogle neotree            | SPC t n    |
+| neotree-dir    | /Open directory in neotree | SPC d n    |
+
+#+begin_src emacs-lisp
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+	neo-show-hidden-files t
+	neo-window-width 55
+	neo-window-fixed-size nil
+	inhibit-compacting-font-caches t
+	projectile-switch-project-action 'neotree-projectile-action
+   )
+  (add-hook 'neotree-after-create-hook
+	    #'(lambda (_)
+		(with-current-buffer (get-buffer neo-buffer-name)
+		  (setq truncate-lines t)
+		  (setq word-wrap nil)
+		  (make-local-variable 'auto-hscroll-mode)
+		  (setq auto-hscroll-mode nil)
+		  )
+	       )
+	    )
+  )
 
 #+end_src
 
@@ -811,8 +888,16 @@ https://mswift42.github.io/themecreator/
 
 #+begin_src emacs-lisp
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t
+	)
+  )
+
 ;; (load-theme 'ghemacs-t1 t)
-(load-theme 'dtmacs t)
+;; (load-theme 'dtmacs t)
+(load-theme 'doom-challenger-deep t)
 
 #+end_src
 
@@ -821,6 +906,15 @@ https://mswift42.github.io/themecreator/
 
 #+begin_src emacs-lisp
 ;; consult
+
+#+end_src
+
+
+* TRANSPARENCY
+With Emacs version 29, true transparency has been added.
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(alpha-background . 100))
 
 #+end_src
 
