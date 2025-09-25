@@ -518,7 +518,6 @@ Org mode source blocks have some really weird and annoying default indentation b
 ** Source Code Block Tag Expansion
 Org-tempo is not a separate package but a module within org that can be enabled. Org-tempo allows for '<s' followed by TAB to a begin_src tag. Other expansions available include:
 
-+------------------------+-------------------------------------------+
 | Typing the below + TAB | Expands to ...                            |
 |------------------------+-------------------------------------------|
 | <a                     | '#+BEGIN_EXPORT ascii' ... '#+END_EXPORT' |
@@ -531,7 +530,6 @@ Org-tempo is not a separate package but a module within org that can be enabled.
 | <q                     | '#+BEGIN_QUOTE' ... '#+END_QUOTE'         |
 | <s                     | '#+BEGIN_SRC' ... '#+END_SRC'             |
 | <v                     | '#+BEGIN_VERSE' ... '#+END_VERSE'         |
-+------------------------+-------------------------------------------+
 
 #+begin_src emacs-lisp
 (require 'org-tempo)
