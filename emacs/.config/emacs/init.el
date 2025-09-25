@@ -1,3 +1,5 @@
+(require 'org)
+
 ;; Step 1: Generate the .el file with a custom name (e.g., "config.el")
 (let ((org-file (expand-file-name "README.org" user-emacs-directory))
       (output-file (expand-file-name "config.el" user-emacs-directory)))

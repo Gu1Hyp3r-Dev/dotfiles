@@ -602,11 +602,10 @@ one, an error is signaled."
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t
 	)
+  ;; (load-theme 'ghemacs-t1 t)
+  ;; (load-theme 'dtmacs t)
+  (load-theme 'doom-challenger-deep t)
   )
-
-;; (load-theme 'ghemacs-t1 t)
-;; (load-theme 'dtmacs t)
-(load-theme 'doom-challenger-deep t)
 
 ;; consult
 
