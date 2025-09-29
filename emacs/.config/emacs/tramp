@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <25/09/23 12:22:19 ~/.config/emacs/tramp>
+;; -*- emacs-lisp -*- <25/09/29 09:25:50 ~/.config/emacs/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
@@ -16,4 +16,6 @@
   ("case-insensitive" nil) ("~" "/root") ("id" "/bin/id")
   ("uid-integer" 0) ("uid-string" "root") ("gid-integer" 0)
   ("gid-string" "root") ("groups-integer" (0))
-  ("groups-string" ("root")) ("bzr" nil) ("git" "\\git") ("hg" nil)))
+  ("groups-string" ("root")) ("bzr" nil) ("git" "\\git") ("hg" nil))
+ ((tramp-file-name "ssh" "user" nil "host" nil nil nil) nil)
+ ((tramp-file-name "sudo" "root" nil "HyprPC" nil nil nil) nil))

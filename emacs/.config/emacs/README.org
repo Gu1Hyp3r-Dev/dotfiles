@@ -5,6 +5,7 @@
 #+OPTIONS: toc:2
 #+PROPERTY: header-args :tangle config.el
 
+
 * Table of Contents :toc:
 - [[#important-programs-to-load-first][IMPORTANT PROGRAMS TO LOAD FIRST]]
   - [[#adding-the-scripts-directory-to-path][Adding the scripts directory to path]]
@@ -59,6 +60,7 @@ To keep this =README.org= a resonable lenght, I have moved a lot of code to indi
 (require 'elpaca-setup)
 (require 'evil-setup)
 (require 'buffer-move)
+(require 'sweeprolog-setup)
 
 #+end_src
 
@@ -150,7 +152,16 @@ To keep this =README.org= a resonable lenght, I have moved a lot of code to indi
     "m d" '(:ignore t :wk "Date/deadline")
     "m d t" '(org-time-stamp :wk "Org time stamp")
     )
-  
+
+  (gh/leader-keys
+    "p" '(:ignore t :wk "Prolog")
+    "p b" '(prolog-consult-buffer :wk "Prolog consult buffer")
+    "p f" '(prolog-consult-file :wk "Prolog consult file")
+    "p k" '(prolog-restart-inferior-process :wk "Prolog restart process")
+    "p p" '(prolog-consult-predicate :wk "Prolog consult predicate")
+    "p r" '(prolog-consult-region :wk "Prolog consult region")
+    "p RET" '(run-prolog :wk "Prolog run")
+    )
   
   (gh/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -690,7 +701,7 @@ https://mswift42.github.io/themecreator/
 With Emacs version 29, true transparency has been added.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(alpha-background . 100))
+(add-to-list 'default-frame-alist '(alpha-background . 90))
 
 #+end_src
 

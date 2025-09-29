@@ -3,6 +3,7 @@
 (require 'elpaca-setup)
 (require 'evil-setup)
 (require 'buffer-move)
+(require 'sweeprolog-setup)
 
 (use-package general
   :config
@@ -89,7 +90,16 @@
     "m d" '(:ignore t :wk "Date/deadline")
     "m d t" '(org-time-stamp :wk "Org time stamp")
     )
-  
+
+  (gh/leader-keys
+    "p" '(:ignore t :wk "Prolog")
+    "p b" '(prolog-consult-buffer :wk "Prolog consult buffer")
+    "p f" '(prolog-consult-file :wk "Prolog consult file")
+    "p k" '(prolog-restart-inferior-process :wk "Prolog restart process")
+    "p p" '(prolog-consult-predicate :wk "Prolog consult predicate")
+    "p r" '(prolog-consult-region :wk "Prolog consult region")
+    "p RET" '(run-prolog :wk "Prolog run")
+    )
   
   (gh/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -414,7 +424,7 @@
 
 ;; consult
 
-(add-to-list 'default-frame-alist '(alpha-background . 100))
+(add-to-list 'default-frame-alist '(alpha-background . 90))
 
 (use-package which-key
   :init

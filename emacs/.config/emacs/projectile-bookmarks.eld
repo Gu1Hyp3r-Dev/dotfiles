@@ -1,1 +1,1 @@
-("~/dotfiles/")
+("~/dotfiles/" "~/monasm-dots/")
